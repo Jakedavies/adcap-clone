@@ -1,0 +1,23 @@
+{
+  "name": "backend",
+  "version": "0.0.0",
+  "scripts": {
+    "start": "ts-node --transpile-only ./src/server.ts",
+    "dev": "PG_CONNECTION_STRING='postgres://dev:dev@localhost:5444/dev' nodemon --config nodemon.json",
+    "build": "tsc",
+    "test": "jest --watchAll",
+    "migrate": "PG_CONNECTION_STRING='postgres://dev:dev@localhost:5444/dev' knex --knexfile src/knexfile.js migrate:latest"
+  },
+  "dependencies": {
+    "@types/node": "^13.7.7",
+    "fastify": "^2.12.1",
+    "fastify-cors": "^3.0.2",
+    "fastify-plugin": "^1.6.1",
+    "knex": "^0.20.10",
+    "nodemon": "^2.0.2",
+    "pg": "^7.18.2",
+    "pino-pretty": "^3.6.0",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.8.3"
+  }
+}

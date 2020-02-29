@@ -1,0 +1,14 @@
+version: "2"
+services:
+        db:
+                image: postgres:9.6.7
+                volumes:
+                        - dbdata:/pgdata
+                ports:
+                        - "5444:5432"
+                environment:
+                        - POSTGRES_USER=dev
+                        - POSTGRES_PASSWORD=dev
+                        - PGDATA=/pgdata
+volumes:
+        dbdata:

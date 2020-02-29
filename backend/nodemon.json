@@ -1,0 +1,8 @@
+{
+  "verbose": true,
+  "debug": false,
+  "exec": "node --inspect -r ts-node/register ./src/server.ts",
+  "watch": ["./src/**/*.ts"],
+  "ext": "ts",
+  "inspect": "127.0.0.1:9228"
+}
