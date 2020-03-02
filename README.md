@@ -10,7 +10,7 @@ A browser based adventure capitalist clone with basic functionality. Features:
 - Full stack application with backend validation and syncing from the backend
 - User can reset their application to start over
 
-Deployed demo can be found [here](https://adcap.jakedavies.info)
+Deployed demo can be found [here](http://adcap.jakedavies.info)
 
 ## Architecture
 
