@@ -67,7 +67,7 @@ Schema:
 ## Tradeoffs
 
 - No user authentication. We simply generate a device_id on frontend load and save that, user authentication/management seemed out of scope.
-- 1 client at a time right now, because of the way state is fast forwarded, running multiple clients will mess this up. This is currently not enforced but revision ID's would allow us to enforce this.
+- 1 session per device right now, because of the way state is fast forwarded, running multiple sessions on the same device will mess this up. This is currently not enforced but revision ID's would allow us to enforce this.
 - Not much work was put into ui design, I'm certainly not a designer.
 
 ## Possible Improvements
