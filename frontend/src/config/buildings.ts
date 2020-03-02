@@ -35,7 +35,7 @@ export const buildings: IBuilding[] = [
       {
         cost: 1000,
         income: 150,
-        name: "Rich Mahogany Lemonade stand"
+        name: "Rich Mahogany Lemonade Stand"
       }
     ]
   },

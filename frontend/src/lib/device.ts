@@ -8,7 +8,7 @@ function uuidv4() {
   });
 }
 
-export function getUserId() {
+export function getDeviceId() {
   let uuid = localStorage.getItem("uuid");
   if (!uuid) {
     uuid = uuidv4();
@@ -17,7 +17,7 @@ export function getUserId() {
   return uuid;
 }
 
-export function reset() {
+export function resetDeviceId() {
   localStorage.removeItem("uuid");
 
   // lazy way to reset game state..

@@ -78,9 +78,8 @@ export default function Building({
       {tierIndex >= 0 ? (
         <div>
           <div
+            className="progress-bar"
             style={{
-              height: "5px",
-              backgroundColor: "green",
               width: `${progress * 100}%`
             }}
           />
@@ -89,8 +88,7 @@ export default function Building({
           </h4>
           {managerOwned && (
             <p>
-              Being worked by{" "}
-              <span style={{ fontWeight: "bold" }}>{manager.name}</span>
+              Being worked by <span className="emphasized">{manager.name}</span>
             </p>
           )}
           <button disabled={!!working} onClick={doWork}>
@@ -108,7 +106,7 @@ export default function Building({
       ) : (
         <div onClick={upgrade}>
           <h4>{building.name}</h4>
-          <p style={{ fontWeight: 600 }}>${nextTier.cost}</p>
+          <p className="emphasized">${nextTier.cost}</p>
         </div>
       )}
     </div>

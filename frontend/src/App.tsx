@@ -2,9 +2,9 @@ import React from "react";
 import useGameState from "./hooks/useGameState";
 import Game from "./components/Game";
 import GameContext from "./lib/GameContext";
-import { reset, getUserId } from "./lib/userId";
+import { resetDeviceId, getDeviceId } from "./lib/device";
 
-const uuid = getUserId();
+const uuid = getDeviceId();
 
 function App() {
   const { error, state, dispatch, loading, additionalIncome } = useGameState(
@@ -22,14 +22,14 @@ function App() {
           <h4>You earned ${additionalIncome} while you were away.</h4>
         )}
 
-        {error && <p style={{ color: "red" }}>{error.message}</p>}
+        {error && <p className="error">{error.message}</p>}
 
         {!loading && state && <Game />}
 
         {!loading && (
-          <div style={{ maxWidth: "650px", margin: "auto", marginTop: "20px" }}>
-            <hr style={{ color: "lightgrey" }} />
-            <button style={{ marginTop: "20px" }} onClick={() => reset()}>
+          <div className="container">
+            <hr />
+            <button className="reset-device" onClick={() => resetDeviceId()}>
               Reset Game
             </button>
           </div>

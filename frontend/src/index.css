@@ -130,3 +130,29 @@ button[disabled] {
 		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
 	}
 }
+
+.error {
+	color: red;
+}
+
+hr {
+	margin-top: 20px;
+	color: lightgrey;
+}
+
+.reset-device {
+	margin-top: 20px;
+}
+
+.progress-bar {
+	height: "5px";
+	background-color: green;
+}
+
+.emphasized {
+	font-weight: bold;
+}
+
+.light-title {
+	font-weight: 200;
+}

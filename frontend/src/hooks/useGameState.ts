@@ -1,13 +1,7 @@
 import { useEffect, useState } from "react";
-import reduce, { IState } from "../reducers";
-
-export interface IDispatch {
-  type: string;
-  payload: any;
-}
-
-const SYNC_FREQUENCY = 500;
-const BACKEND_URL = "http://localhost:3030";
+import reduce, { IState, IDispatch } from "../reducers";
+import useActionSync from "./useActionSync";
+import { getState } from "./../lib/api";
 
 export default function useGameState(deviceId: string) {
   // app state load
@@ -16,60 +10,25 @@ export default function useGameState(deviceId: string) {
   const [error, setError] = useState<undefined | Error>(undefined);
   const [additionalIncome, setAdditionalIncome] = useState(0);
 
-  // syncing state. NOTE: An improvement might be to seperate these concerns (syncing vs app state)
-  const [actionSyncBuffer, setActionSyncBuffer] = useState<IDispatch[]>([]);
-  const [lastSync, setLastSync] = useState(0);
-  const [syncing, setSyncing] = useState(false);
+  function onSyncError(state: IState, error: Error) {
+    setState(state);
+    setError(error);
+  }
 
-  // this effect is basically a debounced sync
-  useEffect(() => {
-    if (syncing) return;
-    if (lastSync + SYNC_FREQUENCY > Date.now()) return;
-
-    // grab the current buffer and then reset it
-    setSyncing(true);
-    const submitBuffer = actionSyncBuffer;
-    setActionSyncBuffer([]);
-
-    fetch(`${BACKEND_URL}/state/${deviceId}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ actions: submitBuffer })
-    })
-      .then(res => res.json())
-      .then(({ state, error }: { state: IState; error: string }) => {
-        // if we got an error property back it means the state
-        // could not be applied because of a reducer error
-        // reset state and buffer
-        if (error) {
-          setActionSyncBuffer([]);
-          setError(new Error(error));
-          setState(state);
-        }
-        setLastSync(Date.now());
-        setSyncing(false);
-      })
-      .catch(e => {
-        // if an unexpected error occurs we do not reset state
-        // we set up so we can retry syncing by pushing the actions back to the start of the buffer
-        setActionSyncBuffer(submitBuffer.concat(actionSyncBuffer));
-        setLastSync(Date.now());
-        setSyncing(false);
-        setError(e.message);
-      });
-  }, [syncing, lastSync, actionSyncBuffer, deviceId]);
+  const { addActionToSync } = useActionSync(deviceId, onSyncError);
 
   function dispatch(action: IDispatch) {
+    console.log("dispatching");
     // @ts-ignore
     setState(state => reduce(state, action));
 
-    setActionSyncBuffer(b => b.concat(action));
+    addActionToSync(action);
   }
 
   // initiallizes the state
   useEffect(() => {
-    fetch(`${BACKEND_URL}/state/${deviceId}`)
-      .then(res => res.json())
+    if (state) return;
+    getState(deviceId)
       .then(response => {
         if (response.error) setError(response.error);
         setState(response.state);
@@ -80,7 +39,7 @@ export default function useGameState(deviceId: string) {
         setError(e.message);
         setLoading(false);
       });
-  }, [deviceId]);
+  }, [state, deviceId]);
 
   return { state, dispatch, loading, error, additionalIncome };
 }

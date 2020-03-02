@@ -17,6 +17,11 @@ export interface IReducer {
   ): IState;
 }
 
+export interface IDispatch {
+  type: string;
+  payload: any;
+}
+
 // Takes current state and applies the purchase of a building(or tier) if user has enough money
 
 interface buildBuildingPayload {

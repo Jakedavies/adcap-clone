@@ -24,7 +24,7 @@ export default function Manager({ owned, manager, balance }: ManagerProps) {
       <div>
         <h4>{manager.name}</h4>
         <p>{manager.description}</p>
-        <p style={{ fontWeight: 600 }}>${manager.cost}</p>
+        <p className="emphasized">${manager.cost}</p>
       </div>
     </div>
   );

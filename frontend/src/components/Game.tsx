@@ -17,7 +17,7 @@ export default function() {
     <div className="container">
       <div>
         <h3>
-          <span style={{ fontWeight: 200 }}>Balance:</span> ${state.money}{" "}
+          <span className="light-title">Balance:</span> ${state.money}{" "}
         </h3>
       </div>
       <div className="buildings-container">
@@ -40,7 +40,7 @@ export default function() {
           <h2>Managers</h2>
 
           {availableManagers.map(manager => {
-            const owned = !!state.managers.includes(manager.id);
+            const owned = state.managers.includes(manager.id);
             return (
               <Manager
                 key={manager.id}

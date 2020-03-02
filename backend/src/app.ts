@@ -2,7 +2,7 @@ import fastify from "fastify";
 import fastifyCors from "fastify-cors";
 
 import indexRoute from "./routes/index.route";
-import dbConnector from "./lib/db";
+import dbConnector from "./lib/plugins/db";
 import knexConfig from "./knexfile";
 
 function createServer() {
@@ -10,11 +10,10 @@ function createServer() {
 
   server.register(indexRoute);
   server.register(dbConnector, knexConfig);
-  server.register(fastifyCors, { origin: ["http://localhost:3000"] });
+  server.register(fastifyCors, { origin: true });
 
   server.setErrorHandler((error, req, res) => {
     req.log.error(error.toString());
-    req.log.error(error.stack);
     res.send({ error });
   });
 
