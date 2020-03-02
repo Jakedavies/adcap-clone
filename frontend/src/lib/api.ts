@@ -1,5 +1,5 @@
 import { IDispatch } from "../reducers";
-const BACKEND_URL = "http://localhost:3030";
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 export function apiFetch(path: string, config?: any) {
   return fetch(`${BACKEND_URL}${path}`, config).then(res => res.json());
